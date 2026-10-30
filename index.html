@@ -1,0 +1,571 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#030303">
+<title>STATUS.NFC | Premium</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 15px;
+  background:
+    radial-gradient(ellipse at 50% 50%, #35220c, transparent 55%),
+    #030303;
+  font-family: Arial, sans-serif;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* ВНЕШНИЙ ЗОЛОТОЙ СВЕТ */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -30%;
+  background:
+    radial-gradient(ellipse at 15% 25%, #b67a272e, transparent 35%),
+    radial-gradient(ellipse at 85% 75%, #d69b362b, transparent 35%);
+  filter: blur(50px);
+  animation: ambient 8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes ambient {
+  to { transform: scale(1.12) rotate(5deg); }
+}
+
+/* СВЕТОВОЕ КОЛЬЦО */
+
+.ring {
+  position: fixed;
+  width: min(95vw, 500px);
+  aspect-ratio: 1;
+  border: 1px solid #c18a3840;
+  border-radius: 50%;
+  box-shadow:
+    0 0 35px #d69b3620,
+    inset 0 0 35px #d69b3610;
+  pointer-events: none;
+}
+
+/* ГЛАВНАЯ КАРТОЧКА */
+
+.card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  max-width: 420px;
+  min-height: 690px;
+  padding: 42px 25px 30px;
+  border-radius: 30px;
+  text-align: center;
+
+  background:
+    linear-gradient(145deg,
+      #16130f 0%,
+      #050505 48%,
+      #171109 100%);
+
+  border: 2px solid #d4a34f;
+
+  box-shadow:
+    0 0 12px #e9b85b80,
+    0 0 45px #c58a3540,
+    0 0 100px #d39a3030,
+    inset 0 0 35px #d49c3520;
+}
+
+/* ВНУТРЕННЯЯ РАМКА */
+
+.card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 7px;
+  border: 1px solid #e3bd704c;
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+/* МРАМОРНЫЙ ФОН ВНУТРИ КАРТОЧКИ */
+
+.marble {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .75;
+  pointer-events: none;
+}
+
+.marble-glow {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 5% 30%, #d29a3930, transparent 25%),
+    radial-gradient(ellipse at 95% 60%, #c18b3035, transparent 30%),
+    radial-gradient(ellipse at 50% 100%, #dba33b20, transparent 40%);
+  pointer-events: none;
+}
+
+/* ЗОЛОТЫЕ ЧАСТИЦЫ */
+
+.spark {
+  position: absolute;
+  z-index: 1;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ffe6a4;
+  box-shadow: 0 0 12px 3px #e9b85b;
+  animation: sparkle 2.5s infinite alternate;
+}
+
+.s1 { top: 17%; left: 12%; }
+.s2 { top: 32%; right: 9%; animation-delay: .8s; }
+.s3 { bottom: 22%; left: 10%; animation-delay: 1.2s; }
+.s4 { bottom: 15%; right: 12%; animation-delay: .4s; }
+
+@keyframes sparkle {
+  from { opacity: .2; transform: scale(.6); }
+  to { opacity: 1; transform: scale(1.6); }
+}
+
+/* КОНТЕНТ */
+
+.content {
+  position: relative;
+  z-index: 3;
+}
+
+/* NFC LOGO */
+
+.nfc {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 20px;
+  color: #f5cf83;
+  filter: drop-shadow(0 0 10px #d99e42);
+}
+
+.heading {
+  font-size: 14px;
+  letter-spacing: 6px;
+  color: #f6dba0;
+  margin-bottom: 32px;
+  font-weight: 400;
+}
+
+.logo {
+  font-size: clamp(27px, 7vw, 39px);
+  font-weight: 900;
+  letter-spacing: 3px;
+  background: linear-gradient(
+    110deg,
+    #fff1c3,
+    #b77a27,
+    #ffe8a1,
+    #a66d24
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 15px #e8b65a65);
+}
+
+.subtitle {
+  color: #e4c37f;
+  font-size: 11px;
+  letter-spacing: 6px;
+  margin-top: 14px;
+}
+
+.divider {
+  width: 170px;
+  height: 1px;
+  margin: 28px auto;
+  background: linear-gradient(
+    90deg, transparent, #f5d58d, transparent
+  );
+  position: relative;
+}
+
+.divider::after {
+  content: "◆";
+  position: absolute;
+  color: #f5d58d;
+  font-size: 11px;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: #fff1d1;
+  margin-bottom: 12px;
+}
+
+.description {
+  font-size: 15px;
+  color: #d0c6b5;
+  line-height: 1.7;
+  margin-bottom: 38px;
+}
+
+/* СОЦИАЛЬНЫЕ КНОПКИ */
+
+.social {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 76px;
+  padding: 10px 20px;
+  margin-bottom: 22px;
+  border-radius: 50px;
+  text-decoration: none;
+  color: #f9e5bd;
+  background:
+    linear-gradient(145deg, #24201a, #050505 55%, #17120a);
+  border: 1px solid #d7a54d;
+  box-shadow:
+    0 0 8px #e9b85b80,
+    0 0 22px #d69b3630,
+    inset 0 1px 8px #ffffff16;
+  transition: .3s;
+}
+
+.social:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 15px #f3c66b,
+    0 0 35px #d69b3660;
+}
+
+.social:active {
+  transform: scale(.97);
+}
+
+/* ЗОНА ЛОГОТИПА */
+
+.icon-wrap {
+  width: 62px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-right: 1px solid #b78b43;
+  padding-right: 14px;
+  margin-right: 14px;
+}
+
+.icon-wrap svg {
+  width: 43px;
+  height: 43px;
+}
+
+.button-text {
+  flex: 1;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.arrow {
+  color: #f5cc78;
+  font-size: 30px;
+  font-weight: 200;
+  margin-left: 8px;
+}
+
+/* ОРИГИНАЛЬНЫЙ INSTAGRAM */
+
+.instagram .icon-wrap svg {
+  filter: drop-shadow(0 0 7px #f36b6b40);
+}
+
+/* TELEGRAM */
+
+.telegram .icon-wrap svg {
+  width: 42px;
+  height: 42px;
+}
+
+/* НИЖНЯЯ ЧАСТЬ */
+
+.footer {
+  margin-top: 55px;
+  color: #edcf8e;
+  font-size: 10px;
+  letter-spacing: 5px;
+  line-height: 2;
+}
+
+.footer-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.footer-line::before,
+.footer-line::after {
+  content: "";
+  width: 35px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e8b85b);
+}
+
+.footer-line::after {
+  transform: rotate(180deg);
+}
+
+/* АДАПТАЦИЯ */
+
+@media(max-width: 380px) {
+  .card {
+    padding: 35px 18px 25px;
+    min-height: 650px;
+  }
+
+  .heading {
+    letter-spacing: 4px;
+  }
+
+  .social {
+    min-height: 65px;
+    padding: 8px 14px;
+  }
+
+  .icon-wrap {
+    width: 55px;
+    height: 52px;
+  }
+
+  .button-text {
+    font-size: 15px;
+  }
+
+  .description {
+    font-size: 13px;
+  }
+
+  .footer {
+    margin-top: 38px;
+    font-size: 9px;
+  }
+}
+
+@media(max-height: 740px) {
+  .card {
+    min-height: auto;
+    padding-top: 25px;
+    padding-bottom: 22px;
+  }
+
+  .heading { margin-bottom: 20px; }
+  .nfc { width: 43px; height: 43px; margin-bottom: 12px; }
+  .divider { margin: 18px auto; }
+  .description { margin-bottom: 22px; }
+  .footer { margin-top: 25px; }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="ring"></div>
+
+<main class="card">
+
+  <!-- МРАМОРНЫЙ SVG-ФОН -->
+  <svg class="marble" viewBox="0 0 420 750"
+       preserveAspectRatio="xMidYMid slice">
+
+    <defs>
+      <filter id="stone">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.018 0.045"
+          numOctaves="3"
+          seed="8"/>
+        <feColorMatrix type="saturate" values="0"/>
+        <feComponentTransfer>
+          <feFuncR type="linear" slope="0.7"/>
+          <feFuncG type="linear" slope="0.65"/>
+          <feFuncB type="linear" slope="0.55"/>
+        </feComponentTransfer>
+      </filter>
+
+      <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#56340f"/>
+        <stop offset=".3" stop-color="#ffdf8c"/>
+        <stop offset=".55" stop-color="#a76c1e"/>
+        <stop offset=".8" stop-color="#f7d17b"/>
+        <stop offset="1" stop-color="#59350c"/>
+      </linearGradient>
+
+      <filter id="goldGlow">
+        <feGaussianBlur stdDeviation="2.5" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+
+    <rect width="420" height="750"
+          filter="url(#stone)" opacity=".25"/>
+
+    <g fill="none" stroke="url(#gold)"
+       filter="url(#goldGlow)" opacity=".9">
+
+      <path d="M-60 110 C70 15 55 210 165 160
+               S300 40 480 100" stroke-width="2"/>
+
+      <path d="M-60 125 C70 30 65 220 170 173
+               S320 50 480 115" stroke-width=".7"/>
+
+      <path d="M-80 490 C45 380 70 600 185 520
+               S335 400 480 480" stroke-width="2.5"/>
+
+      <path d="M-80 510 C40 400 75 620 190 540
+               S350 420 480 500" stroke-width=".8"/>
+
+      <path d="M-30 680 C100 580 130 750 230 675
+               S370 590 460 650" stroke-width="1.5"/>
+
+      <path d="M350 -30 C260 80 400 140 300 230"
+            stroke-width="1.5"/>
+    </g>
+  </svg>
+
+  <div class="marble-glow"></div>
+
+  <span class="spark s1"></span>
+  <span class="spark s2"></span>
+  <span class="spark s3"></span>
+  <span class="spark s4"></span>
+
+  <div class="content">
+
+    <svg class="nfc" viewBox="0 0 64 64"
+         fill="none" stroke="currentColor"
+         stroke-width="3.5" stroke-linecap="round">
+      <path d="M32 20v24"/>
+      <path d="M23 24a12 12 0 0 0 0 16"/>
+      <path d="M41 24a12 12 0 0 1 0 16"/>
+      <path d="M15 16a23 23 0 0 0 0 32"/>
+      <path d="M49 16a23 23 0 0 1 0 32"/>
+      <circle cx="32" cy="32" r="2" fill="currentColor"/>
+    </svg>
+
+    <div class="heading">МОИ КОНТАКТЫ</div>
+
+    <div class="divider"></div>
+
+    <div class="logo">STATUS.NFC</div>
+
+    <div class="subtitle">DIGITAL IDENTITY</div>
+
+    <p class="description">
+     
+    </p>
+
+    <!-- INSTAGRAM -->
+    <a class="social instagram"
+       href="https://instagram.com/ТВОЙ_НИК"
+       target="_blank"
+       rel="noopener noreferrer">
+
+      <span class="icon-wrap">
+        <svg viewBox="0 0 48 48" fill="none">
+          <defs>
+            <linearGradient id="ig" x1="0" y1="48" x2="48" y2="0">
+              <stop stop-color="#FFD776"/>
+              <stop offset=".35" stop-color="#FF543E"/>
+              <stop offset=".7" stop-color="#C837AB"/>
+              <stop offset="1" stop-color="#515BD4"/>
+            </linearGradient>
+          </defs>
+          <rect x="5" y="5" width="38" height="38"
+                rx="11" stroke="url(#ig)" stroke-width="4"/>
+          <circle cx="24" cy="24" r="9"
+                  stroke="url(#ig)" stroke-width="4"/>
+          <circle cx="35" cy="13" r="2.7" fill="#E8A3C7"/>
+        </svg>
+      </span>
+
+      <span class="button-text">Instagram</span>
+      <span class="arrow">›</span>
+    </a>
+
+    <!-- TELEGRAM -->
+    <a class="social telegram"
+       href="https://t.me/ТВОЙ_НИК"
+       target="_blank"
+       rel="noopener noreferrer">
+
+      <span class="icon-wrap">
+        <svg viewBox="0 0 48 48">
+          <circle cx="24" cy="24" r="23" fill="#229ED9"/>
+          <path d="M10 23.1L36.5 12.8
+                   C37.8 12.3 38.9 13.2 38.4 15
+                   L33.9 36.1
+                   C33.6 37.6 32.6 38 31.3 37.2
+                   L23.2 31.2
+                   L19.3 35
+                   C18.5 35.8 17.2 35.5 17.1 34.2
+                   L17.3 27.2
+                   L31.2 16.6
+                   C31.8 16.1 31.1 15.8 30.4 16.2
+                   L13.1 25.3
+                   L10 24.2
+                   C8.8 23.8 8.9 23.5 10 23.1Z"
+                fill="white"/>
+        </svg>
+      </span>
+
+      <span class="button-text">Telegram</span>
+      <span class="arrow">›</span>
+    </a>
+
+    <div class="footer">
+      <div class="footer-line">
+        YOUR CONTACTS
+      </div>
+      IN ONE TAP
+    </div>
+
+  </div>
+</main>
+
+</body>
+</html>
